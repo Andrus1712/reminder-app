@@ -4,7 +4,7 @@ export function initialValues() {
     return {
         description: "",
         notes: "",
-        payDate: "",
+        payDate: new Date(),
     }
 }
 
@@ -17,7 +17,10 @@ export function validationSchema() {
             .date()
             .required("Pay Date is required")
             .nullable()
-            .min(new Date(1900, 0, 1)),
+            .min(
+                new Date(new Date().setHours(0, 0, 0, 0)),
+                "Pay Date must be today or later"
+            ),
         notes: Yup
             .string()
             .nullable()

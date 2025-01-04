@@ -10,7 +10,10 @@ function ReminderLayout() {
                 options={{
                     presentation: 'modal',
                     animation: "ios",
-                    headerShown: true
+                    headerShown: true,
+                    headerStyle: {
+                        backgroundColor: '#fff',
+                    }
                 }}
             />
         </Stack>
