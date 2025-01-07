@@ -1,15 +1,22 @@
 import React, {useState} from 'react';
 import {Platform, TouchableOpacity, View} from "react-native";
 import {styles} from "./newReminderForm.styles";
-import {Button, Icon, Input} from "@rneui/base";
+import {Button, Icon, Input, Text} from "@rneui/base";
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
 import {useFormik} from "formik";
 import {initialValues, validationSchema} from "./NewReminderFrom.data";
 import DateTimePicker from '@react-native-community/datetimepicker';
+import {useAppDispatch, useAppSelector} from "../../../features/hooks/store.hook";
+import {setReminder} from "../../../features/redux/slices/reminder.slice";
+import Toast from "react-native-toast-message";
 
 function NewReminderForm() {
-    const [date, setDate] = useState(new Date());
+    const dataReminder = useAppSelector(store => store.reminder);
+    const dispatch = useAppDispatch();
+    
+    const [date, setDate] = useState(new Date(dataReminder.payDate));
     const [show, setShow] = useState(false);
+    
     
     // useEffect(() => {
     //     Toast.show({
@@ -22,23 +29,36 @@ function NewReminderForm() {
     // }, []);
     
     const formik = useFormik({
-        initialValues: initialValues(),
+        initialValues: initialValues(dataReminder),
         validationSchema,
         validateOnChange: true,
         onSubmit: (values) => {
             try {
+                
                 const {
                     description,
                     notes,
                     payDate
                 } = values;
                 
-                console.log(description, notes, payDate);
+                dispatch(setReminder({
+                    description,
+                    payDate: payDate.toISOString(),
+                    notes,
+                }));
                 
             } catch (e) {
                 console.error(e);
+                Toast.show({
+                    position: "bottom",
+                    text1: 'Error',
+                    text2: 'Something went wrong',
+                    bottomOffset: 50,
+                    type: 'info',
+                });
             }
-        },
+        }
+        ,
     });
     
     const onChange = (event: any, selectedDate?: Date) => {
@@ -60,6 +80,7 @@ function NewReminderForm() {
                     label={"Description"}
                     onChangeText={(text) => formik.setFieldValue('description', text)}
                     errorMessage={formik.errors.description}
+                    value={formik.values.description}
                 
                 />
                 <Input
@@ -89,11 +110,14 @@ function NewReminderForm() {
                     numberOfLines={10}
                     inputContainerStyle={styles.containerArea}
                     inputStyle={styles.textArea}
+                    value={formik.values.notes}
                 />
                 
                 
                 <Button title={"Send"} onPress={() => formik.submitForm()} containerStyle={styles.buttonContainer}
                         buttonStyle={styles.btn}/>
+                
+                <Text>{JSON.stringify(dataReminder, null, 2)}</Text>
             </View>
         
         </KeyboardAwareScrollView>

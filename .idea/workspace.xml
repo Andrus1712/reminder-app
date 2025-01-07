@@ -51,7 +51,7 @@
     "npm.ios.executor": "Run",
     "npm.start.executor": "Run",
     "settings.editor.selected.configurable": "preferences.pluginManager",
-    "ts.external.directory.path": "/Users/desarrollo/proyectos/react-native/ReminderApp/node_modules/typescript/lib",
+    "ts.external.directory.path": "D:\\Proyectos\\react-native\\reminder-app\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -67,6 +67,7 @@
       <recent name="$PROJECT_DIR$/app/(tabs)/dashboard" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Proyectos\react-native\reminder-app\features\redux" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/app/(tabs)/schedule" />
       <recent name="$PROJECT_DIR$/app/(tabs)/notify" />

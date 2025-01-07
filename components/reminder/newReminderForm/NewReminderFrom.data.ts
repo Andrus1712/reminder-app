@@ -1,10 +1,16 @@
 import * as Yup from "yup";
 
-export function initialValues() {
+interface IReminderModel {
+    description: string;
+    payDate: string;
+    notes: string;
+}
+
+export function initialValues(dataReminder: IReminderModel) {
     return {
-        description: "",
-        notes: "",
-        payDate: new Date(),
+        description: dataReminder.description,
+        notes: dataReminder.notes,
+        payDate: new Date(dataReminder.payDate),
     }
 }
 
